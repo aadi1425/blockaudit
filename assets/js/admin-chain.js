@@ -15,22 +15,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   BA.auth.reveal();
   ui.showFlash();
 
-  const ZERO = '0'.repeat(64);
-  let checked = []; // [{ b, m, actual, hashOk, powOk, linkOk, ok }]
+  let checked = []; // BA.checkBlock results plus m (meta)
 
-  // Recompute every hash and check every link, one block at a time.
+  // Recompute every hash, check every link and signature, one block at a time.
   const check = async () => {
     const chain = BA.getChain();
     const meta = BA.getMeta();
     const out = [];
     for (let i = 0; i < chain.length; i++) {
-      const b = chain[i];
-      const actual = await BA.hashBlock(b);
-      const hashOk = actual === b.hash;
-      const powOk = String(b.hash).startsWith(BA.PREFIX);
-      const parent = i > 0 ? chain[i - 1].hash : ZERO;
-      const linkOk = b.previousHash === parent;
-      out.push({ b, m: meta[b.index] || {}, actual, parent, hashOk, powOk, linkOk, ok: hashOk && powOk && linkOk });
+      const c = await BA.checkBlock(chain[i], chain[i - 1]);
+      c.m = meta[c.b.index] || {};
+      out.push(c);
     }
     return out;
   };
@@ -91,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (c.hashOk && !c.powOk) problems.push(el('div', { class: 'cx-diff' }, [
       el('p', { text: `The hash does not start with ${BA.PREFIX}, so no Proof of Work was done.` }),
     ]));
+    if (!c.sigOk) problems.push(el('div', { class: 'cx-diff' }, [el('p', { text: ui.sigProblem(c) })]));
 
     return el('article', { class: `cx-card${c.ok ? '' : ' tampered'}`, 'aria-label': `Block ${b.index}` }, [
       el('header', { class: 'cx-head' }, [
@@ -109,10 +105,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       ]),
       hashRow('Hash', String(b.hash)),
       hashRow('Previous hash', String(b.previousHash)),
+      b.signature !== undefined ? hashRow('Signature', String(b.signature)) : null,
       el('div', { class: 'cx-checks' }, [
         checkChip(c.hashOk, 'Hash matches data'),
         checkChip(c.powOk, `Starts with ${BA.PREFIX}`),
         checkChip(c.linkOk, genesis ? 'Genesis link' : `Linked to #${b.index - 1}`),
+        ui.sigChip(c, true),
       ]),
       genesis ? null : votesView(m),
       ...problems,
@@ -165,8 +163,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const sum = ui.clear(ui.$('#cx-summary'));
     sum.className = `cx-summary ${result.valid ? 'ok' : 'bad'}`;
+    const signed = checked.filter((c) => c.sig === 'signed').length;
     sum.textContent = result.valid
-      ? `All ${checked.length} hashes recomputed with SHA-256. Every block matches its data and points to the one before it.`
+      ? `All ${checked.length} hashes recomputed with SHA-256. Every block matches its data and points to the one before it. ${signed} signature${signed === 1 ? '' : 's'} verified.`
       : `${bad.length} block${bad.length > 1 ? 's' : ''} failed: #${bad.map((c) => c.b.index).join(', #')}. The first break is at block #${bad[0].b.index}.`;
 
     render();
@@ -178,6 +177,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     BA.log('info', 'Admin re-checked the chain from the explorer');
     run();
   });
+  // CSV export of the full audit log (admin only, this page is guarded).
+  ui.$('#export-csv').addEventListener('click', () => {
+    const rows = [['Block', 'Time (UTC)', 'Requester', 'Resource', 'Result', 'Reason', 'Node votes YES',
+      'Random vote', 'Signature check', 'Chain check', 'Nonce', 'Hash', 'Previous hash', 'Signature']];
+    checked.forEach((c) => {
+      const { b, m } = c;
+      rows.push([b.index, b.timestamp, b.requester, b.resource, b.status, m.reason || '',
+        Array.isArray(m.votes) ? `${m.yes}/3` : '', m.faultTriggered ? 'yes' : '', BA.SIG_LABEL[c.sig],
+        c.ok ? 'VALID' : 'TAMPERED', b.nonce, b.hash, b.previousHash, b.signature || '']);
+    });
+    const day = new Date().toISOString().slice(0, 10);
+    ui.downloadCsv(`blockaudit-audit-log-${day}.csv`, rows);
+    BA.log('info', `Admin exported the audit log as CSV (${checked.length} blocks)`);
+    ui.alert('success', `Audit log exported: ${checked.length} blocks.`, 3000);
+  });
+
   ['#cx-filter', '#cx-order'].forEach((id) => ui.$(id).addEventListener('change', render));
   ui.$('#cx-search').addEventListener('input', render);
 

@@ -85,7 +85,13 @@ blockaudit/
 ├── user/history.html       user: own history only
 ├── user/ledger.html        user: public ledger — every block's hashes + live verify; names only on own blocks
 ├── admin/overview.html     admin: stats, recent activity, alerts
-├── admin/chain.html        admin: chain explorer (every block, full hashes, live re-check)
+├── admin/chain.html        admin: chain explorer (every block, full hashes, signature, live re-check, CSV export)
+├── admin/tamper.html       admin: tamper test (edit, re-mine like an attacker, validate, reset from ba_chain_clean)
+├── admin/consensus.html    admin: every consensus round, Node 3 random votes marked
+├── admin/merkle.html       admin: Merkle tree, root on top, nodes that differ from ba_chain_clean in red
+├── admin/terminal.html     admin: ba_terminal log, coloured by level, filter, follow
+├── admin/users.html        admin: per-account activity, access list, public key
+├── admin/report.html       admin: printable audit report (@media print in style.css)
 ├── assets/css/style.css    all styles (one file)
 ├── assets/data/seed.json   starter chain { chain, meta, terminal } loaded into an empty browser
 ├── assets/js/core.js       BA core: storage, SHA-256, mining, chain, validation, consensus, ACL, Merkle, log
@@ -93,7 +99,8 @@ blockaudit/
 ├── assets/js/ui.js         BA.ui helpers: el(), topbar, nav lists, modal, alerts, overlay, seal
 ├── assets/js/login.js      index.html logic
 ├── assets/js/user-request.js, user-history.js, user-ledger.js
-├── assets/js/admin-overview.js, admin-chain.js
+├── assets/js/admin-overview.js, admin-chain.js, admin-tamper.js, admin-consensus.js,
+│   admin-merkle.js, admin-terminal.js, admin-users.js, admin-report.js
 ├── Dockerfile, nginx.conf, .dockerignore   server security headers (Docker only)
 ├── README.md
 └── CLAUDE.md               this file
@@ -105,19 +112,34 @@ blockaudit/
 - `ba_meta` — per-block extras keyed by block index: `{ kind, resourceId, votes, yes, reason, faultTriggered }`
 - `ba_terminal` — backend log lines `{ t, level, msg }` (max 800)
 - `ba_admin_seen` — last block index the admin has seen (for alerts)
-- Session lives in **sessionStorage** (`ba_session`, `ba_last`, `ba_flash`).
+- Session lives in **sessionStorage** (`ba_session`, `ba_last`, `ba_flash`, and `ba_sigkey` =
+  the signed-in user's private signing key as a JWK; cleared on logout).
+
+### Digital signatures (ECDSA P-256)
+- Private key d = PBKDF2(password, `SIG_SALTS[user]` in `auth.js`, 100k) mod (n−1) + 1, made at login.
+  Public point d·G is computed with BigInt in `auth.js` and must equal `BA.PUBKEYS[user]` in `core.js`.
+- Signed text: `BA.recordText(b)` = `BlockAudit record v1|requester|resource|status|timestamp`.
+  Signature (hex r||s, 128 chars) is stored as `b.signature` and is appended to `BA.blockData(b)`.
+- `BA.checkSignature(b)` → `signed | invalid | missing | legacy | system | genesis`.
+  From `BA.SIGNED_FROM` (19) on, every block must be signed except failed logins (`system`).
+  Blocks below 19 are the starter chain, made before signatures (`legacy`).
+- Admin-page attempts by users are signed with the user's session key.
+- Aadi (admin) has no signing key; he never makes requests.
 
 ### Block format
-`{ index, timestamp, requester, resource, status, previousHash, nonce, hash }`
+`{ index, timestamp, requester, resource, status, previousHash, nonce, hash, signature? }`
 - `status`: `APPROVED` or `REJECTED` (genesis uses `APPROVED`, requester `SYSTEM`, resource `GENESIS`).
-- Hash = SHA-256 of `BA.blockData(b)` = `[index, timestamp, requester, resource, status, previousHash, nonce].join('|')`
+- Hash = SHA-256 of `BA.blockData(b)` = `[index, timestamp, requester, resource, status, previousHash, nonce].join('|')`,
+  plus `|signature` when the block has one (older blocks hash exactly as before).
 - Proof of Work: nonce rises until hash starts with `BA.PREFIX` (`000`, `BA.DIFFICULTY = 3`).
 - Genesis `previousHash` = 64 zeros.
 
 ### Key core.js functions
 `BA.sha256(text)`, `BA.hashBlock(b)`, `BA.mine(block, onProgress)`, `BA.getChain()`, `BA.getMeta()`,
 `BA.init()` (loads the starter chain via `BA.loadSeed()`, else mines genesis — once), `BA.addBlock(requester, resource, status, meta, onProgress)`,
-`BA.validate(chain)` → `{ valid, issues:[{index,type:'hash'|'pow'|'link'|'empty',stored,actual}], length }`,
+`BA.checkBlock(b, prev)` → `{ b, actual, parent, hashOk, powOk, linkOk, sig, sigOk, ok }` (used by every page),
+`BA.validate(chain)` → `{ valid, issues:[{index,type:'hash'|'pow'|'link'|'sig'|'empty',stored,actual}], length }`,
+`BA.checkSignature(b)`, `BA.userSummary()`, `BA.unknownLogins()`, `BA.ui.downloadCsv()`, `BA.ui.sigChip()`,
 `BA.consensus(requester, resourceId)` → `{ votes, yes, approved, allowed, faultTriggered, deviated }`,
 `BA.denyReason()`, `BA.merkle(chain)` → `{ levels, root }`, `BA.statsFor(user|null)`, `BA.log(level, msg)`.
 
@@ -200,15 +222,16 @@ git push
 ### Part 2 — Remaining admin pages
 - [x] Chain explorer (`admin/chain.html`) — full hash, prev hash, nonce, votes, live re-check, filter, order, copy
 - [x] Public ledger for users (`user/ledger.html`) — everyone verifies, names only on own blocks
-- [ ] Digital signatures — each user signs requests (WebCrypto ECDSA) so nobody can forge one
-- [ ] Tamper test page — pick a block, change requester, Validate, Reset (restore from `ba_chain_clean`);
-      show stored vs recomputed hash side by side
-- [ ] Consensus logs — every request with the 3 node votes, faulty node marked
-- [ ] Merkle tree — real tree shape from `BA.merkle()`, root at top, leaf labels
-- [ ] Terminal — render `ba_terminal` with colours by level, auto-scroll
-- [ ] All users — table: user, role, requests, approved, rejected, last activity
-- [ ] CSV export of the audit log (admin only)
-- [ ] Print-friendly report view
+- [x] Digital signatures — each user signs requests (WebCrypto ECDSA) so nobody can forge one
+- [x] Tamper test page — pick a block, change requester, Validate, Reset (restore from `ba_chain_clean`);
+      show stored vs recomputed hash side by side; plus "Re-mine" to play the smarter attacker
+- [x] Consensus logs — every request with the 3 node votes, faulty node marked
+- [x] Merkle tree — real tree shape from `BA.merkle()`, root at top, leaf labels
+- [x] Terminal — render `ba_terminal` with colours by level, auto-scroll
+- [x] All users — table: user, role, requests, approved, rejected, last activity
+- [x] CSV export of the audit log (admin only) — button on Chain explorer
+- [x] Print-friendly report view — admin/report.html
+- [ ] Aadi tests all of Part 2 with Live Server
 
 ### Part 3 — Live Nakamoto network across browser tabs (decided, not started)
 - Each browser tab = one node with its own chain copy (move node chain to per-tab storage;
@@ -229,10 +252,21 @@ git push
 - Rules: exactly 2 objectives, minimum 10 pages, methodology diagram covering everything,
   results explained (why they look that way), minimum 15 references incl. research papers,
   prompt engineering documented in an appendix, abstract at the END (under 150 words).
-- Known gaps: Digital Signatures and Sybil-attack prevention are mapped in the syllabus table
-  but not implemented — either add a light version or word them as "discussed".
+- Known gaps: Sybil-attack prevention is mapped in the syllabus table but not implemented —
+  either add a light version or word it as "discussed". Digital signatures are now implemented.
 
 ## 9. Progress log (newest at top — add a line after every change)
+
+- 2026-10-22 — Part 2 built. Digital signatures: ECDSA P-256 keys derived from passwords
+  (`SIG_SALTS` in auth.js, `BA.PUBKEYS` in core.js), every request and admin-page attempt
+  signed, signature included in the block hash, `BA.checkBlock()` shared by validate/explorer/ledger.
+  New admin pages: tamper, consensus, merkle, terminal, users, report; CSV export on Chain explorer
+  (cells starting = + - @ get a leading '). Admin nav has 8 links → `.topbar-wide` puts them on
+  their own row. Headless-Chrome tested: seed still VALID (all 'legacy'); all 3 user keys match;
+  signed request VALID; requester / status edit + re-mine → caught as sig invalid; signature
+  stripped + re-mine → sig missing; legacy block edit + re-mine → NOT caught (shown honestly on the
+  tamper page); failed login unsigned and VALID; user opening admin page → bounced, signed block;
+  all 8 admin pages render with no JS errors; screenshots at 1366, 1024 and 390 px checked.
 
 - 2026-10-22 — Starter chain: copied the 19 blocks, votes and terminal log from Aadi's Live Server
   browser into `assets/data/seed.json`. `BA.loadSeed()` in `core.js` fetches it when the browser

@@ -58,13 +58,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     ));
     BA.log(c.approved ? 'success' : 'error', `  Consensus ${c.yes}/3 → ${status}`);
 
-    // 2. Mine it, approved or not
-    ui.overlay.show('Proof of Work', 'Recording your request on the audit chain');
+    // 2. Sign it with the user's key, then mine it, approved or not
+    ui.overlay.show('Proof of Work', 'Signing your request and recording it on the audit chain');
     const reason = c.approved ? '' : BA.denyReason(s.user, r.id);
     const block = await BA.addBlock(s.user, r.name, status, {
       kind: 'resource', resourceId: r.id, votes: c.votes, yes: c.yes,
       faultTriggered: c.faultTriggered, deviated: c.deviated, reason,
-    }, (n) => ui.overlay.nonce(n));
+    }, (n) => ui.overlay.nonce(n), BA.auth.signRecord);
     ui.overlay.hide();
     if (!c.approved) BA.log('error', `SECURITY: unauthorised request by ${s.user} for ${r.name} recorded in block #${block.index}`);
 
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           el('dt', { text: 'Block' }), el('dd', { class: 'mono', text: `#${block.index}` }),
           el('dt', { text: 'Time' }), el('dd', { text: ui.fmtTime(block.timestamp) }),
           el('dt', { text: 'Consensus' }), el('dd', { text: `${granted ? 'Approved' : 'Rejected'} by majority vote of 3 nodes` }),
+          el('dt', { text: 'Signature' }), el('dd', { text: block.signature ? 'Signed with your private key (ECDSA)' : 'Not signed' }),
         ]),
         granted ? null : el('div', { class: 'why' }, [el('strong', { text: 'Why was I denied?' }), reason]),
         done,

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tamper test · BlockAudit</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔐%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/core.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/admin-tamper.js" defer></script>
+</head>
+<body data-root="../" data-guard>
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1>Tamper test</h1>
+        <p>Play the attacker: change a record, try to hide it by re-mining, then let the chain catch it. Reset puts everything back.</p>
+      </div>
+    </div>
+
+    <div class="stats stats-4">
+      <div class="stat" id="tp-status-box"><div class="stat-value" id="tp-status">…</div><div class="stat-label">Chain status</div></div>
+      <div class="stat"><div class="stat-value" id="tp-issues">0</div><div class="stat-label">Problems found</div></div>
+      <div class="stat"><div class="stat-value" id="tp-edited">No</div><div class="stat-label">Differs from untouched copy</div></div>
+      <div class="stat"><div class="stat-value" id="tp-clean">…</div><div class="stat-label">Untouched copy</div></div>
+    </div>
+
+    <div class="cx-summary" id="tp-summary" role="status" aria-live="polite"></div>
+
+    <div class="tp-steps">
+      <section class="card tp-step" aria-labelledby="tp-1">
+        <h2 id="tp-1"><span class="tp-num">1</span> Edit a record</h2>
+        <div class="field">
+          <label for="tp-block">Block</label>
+          <select class="input" id="tp-block"></select>
+        </div>
+        <div class="field">
+          <label for="tp-field">Field</label>
+          <select class="input" id="tp-field">
+            <option value="requester">Requester (who)</option>
+            <option value="resource">Resource (what)</option>
+            <option value="status">Result (APPROVED / REJECTED)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tp-value">New value</label>
+          <input class="input" id="tp-value" type="text" maxlength="40" autocomplete="off">
+        </div>
+        <button class="btn btn-block" type="button" id="tp-apply">Apply edit</button>
+      </section>
+
+      <section class="card tp-step" aria-labelledby="tp-2">
+        <h2 id="tp-2"><span class="tp-num">2</span> Re-mine (optional)</h2>
+        <p class="muted">A smarter attacker re-mines the edited block and every block after it, so every hash and link looks right again.</p>
+        <button class="btn btn-ghost btn-block" type="button" id="tp-remine">Re-mine from this block</button>
+        <h2 class="tp-gap"><span class="tp-num">3</span> Check and reset</h2>
+        <p class="muted">Validate recomputes every hash and verifies every signature. Reset restores the untouched copy.</p>
+        <div class="tp-actions">
+          <button class="btn" type="button" id="tp-validate">Validate</button>
+          <button class="btn btn-ghost" type="button" id="tp-reset">Reset chain</button>
+        </div>
+        <p class="muted tp-note">Reset before users make new requests, or their new blocks will link to the edited chain.</p>
+      </section>
+    </div>
+
+    <section class="section cx-card" id="tp-detail" aria-live="polite"></section>
+  </main>
+</body>
+</html>

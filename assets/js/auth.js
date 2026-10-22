@@ -26,6 +26,13 @@
   };
   const DUMMY_SALT = '00000000000000000000000000000000';
 
+  // Separate salts for the signing keys, so the key is not the password hash above.
+  const SIG_SALTS = {
+    Arjun: '1a5a2ebea7df915a41a8c8bdfb96a072',
+    Kavya: 'e4ff8ba02772fcc132e202159305d575',
+    Rohan: '3922912ef572416da00097856bdccff2',
+  };
+
   async function pbkdf2(password, saltHex) {
     const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
     const bits = await crypto.subtle.deriveBits(
@@ -53,6 +60,43 @@
   async function sign(text) {
     return BA.hex(await crypto.subtle.sign('HMAC', await hmacKey(), enc.encode(text)));
   }
+  /* ---------- signing key: P-256 private key derived from the password ---------- */
+  // WebCrypto cannot derive an EC key from a secret, so the public point d·G is
+  // computed here with BigInt once per login. Verification uses BA.PUBKEYS in core.js.
+  const P = 0xffffffff00000001000000000000000000000000ffffffffffffffffffffffffn;
+  const N = 0xffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632551n;
+  const G = [0x6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296n,
+    0x4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5n];
+  const mod = (a, m) => ((a % m) + m) % m;
+  const inv = (a, m) => {
+    let [r0, r1, s0, s1] = [mod(a, m), m, 1n, 0n];
+    while (r1) { const q = r0 / r1; [r0, r1] = [r1, r0 - q * r1]; [s0, s1] = [s1, s0 - q * s1]; }
+    return mod(s0, m);
+  };
+  const add = (p, q) => {
+    if (!p) return q;
+    if (!q) return p;
+    if (p[0] === q[0] && mod(p[1] + q[1], P) === 0n) return null;
+    const l = p[0] === q[0]
+      ? mod(3n * p[0] * p[0] - 3n, P) * inv(2n * p[1], P)
+      : mod(q[1] - p[1], P) * inv(q[0] - p[0], P);
+    const x = mod(l * l - p[0] - q[0], P);
+    return [x, mod(l * (p[0] - x) - p[1], P)];
+  };
+  const mul = (k, p) => {
+    let r = null;
+    for (; k > 0n; k >>= 1n, p = add(p, p)) if (k & 1n) r = add(r, p);
+    return r;
+  };
+  const hex64 = (n) => n.toString(16).padStart(64, '0');
+
+  async function deriveSigningKey(user, password) {
+    const d = mod(BigInt('0x' + await pbkdf2(password, SIG_SALTS[user])), N - 1n) + 1n;
+    const [x, y] = mul(d, G);
+    if (hex64(x) !== BA.PUBKEYS[user].x || hex64(y) !== BA.PUBKEYS[user].y) return null;
+    return { kty: 'EC', crv: 'P-256', d: BA.b64url(hex64(d)), x: BA.b64url(hex64(x)), y: BA.b64url(hex64(y)) };
+  }
+
   const b64 = (s) => btoa(unescape(encodeURIComponent(s)));
   const unb64 = (s) => decodeURIComponent(escape(atob(s)));
 
@@ -129,6 +173,15 @@
     }
 
     clearFails(user);
+    if (SIG_SALTS[user]) {
+      const jwk = await deriveSigningKey(user, password);
+      if (!jwk) {
+        BA.log('error', `SECURITY: signing key for ${user} does not match the published public key`);
+        return { ok: false, reason: 'Your signing key could not be loaded. Contact the administrator.' };
+      }
+      ss.set('ba_sigkey', JSON.stringify(jwk));
+      BA.log('info', `Signing key loaded for ${user} (ECDSA P-256)`);
+    }
     const now = Date.now();
     const payload = { u: user, r: BA.USERS[user].role, iat: now, exp: now + SESSION_MS, sid: BA.randomHex(8) };
     const body = b64(JSON.stringify(payload));
@@ -156,7 +209,18 @@
     if (now > p.exp) return { invalid: 'Your session reached its 30-minute limit. Sign in again.' };
     const last = Number(ss.get('ba_last') || 0);
     if (now - last > IDLE_MS) return { invalid: 'You were signed out after 10 minutes of inactivity.' };
+    if (SIG_SALTS[p.u] && !ss.get('ba_sigkey')) return { invalid: 'Sign in again to load your signing key.' };
     return { user: p.u, role: p.r, iat: p.iat, exp: p.exp, sid: p.sid };
+  };
+
+  // Signs a record with the signed-in user's private key. Returns hex r||s, or null.
+  auth.signRecord = async (text) => {
+    const raw = ss.get('ba_sigkey');
+    if (!raw) return null;
+    try {
+      const key = await crypto.subtle.importKey('jwk', JSON.parse(raw), { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+      return BA.hex(await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key, enc.encode(text)));
+    } catch (e) { return null; }
   };
 
   auth.logout = (message, type) => {
@@ -169,6 +233,7 @@
     }
     ss.del('ba_session');
     ss.del('ba_last');
+    ss.del('ba_sigkey');
     if (message) BA.ui.flash(type || 'info', message);
     location.replace((document.body.dataset.root || '') + 'index.html');
   };
@@ -203,6 +268,7 @@
     if (!s || s.invalid) {
       BA.ui.flash('warn', (s && s.invalid) || 'Sign in to continue.');
       ss.del('ba_session');
+      ss.del('ba_sigkey');
       location.replace(root + 'index.html');
       return null;
     }
@@ -211,7 +277,7 @@
     if (required === 'admin' && s.role !== 'admin') {
       const reason = 'Standard accounts cannot open the admin console.';
       BA.log('error', `SECURITY: ${s.user} tried to open admin page "${page}". Blocked.`);
-      await BA.addBlock(s.user, `Admin Console (${page})`, 'REJECTED', { kind: 'page', reason });
+      await BA.addBlock(s.user, `Admin Console (${page})`, 'REJECTED', { kind: 'page', reason }, null, auth.signRecord);
       BA.ui.flash('danger', 'Access to the admin area was denied. This attempt has been recorded.');
       location.replace(root + 'user/request.html');
       return null;

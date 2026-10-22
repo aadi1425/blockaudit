@@ -16,21 +16,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   BA.auth.reveal();
   ui.showFlash();
 
-  let checked = []; // [{ b, actual, parent, hashOk, powOk, linkOk, ok }]
+  let checked = []; // BA.checkBlock results
 
-  // Recompute every hash in this browser, block by block.
+  // Recompute every hash and verify every signature in this browser, block by block.
   const check = async () => {
     const chain = BA.getChain();
     const out = [];
-    for (let i = 0; i < chain.length; i++) {
-      const b = chain[i];
-      const actual = await BA.hashBlock(b);
-      const parent = i > 0 ? chain[i - 1].hash : '0'.repeat(64);
-      const hashOk = actual === b.hash;
-      const powOk = String(b.hash).startsWith(BA.PREFIX);
-      const linkOk = b.previousHash === parent;
-      out.push({ b, actual, parent, hashOk, powOk, linkOk, ok: hashOk && powOk && linkOk });
-    }
+    for (let i = 0; i < chain.length; i++) out.push(await BA.checkBlock(chain[i], chain[i - 1]));
     return out;
   };
 
@@ -74,7 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkChip(c.hashOk, 'Hash matches data'),
         checkChip(c.powOk, `Starts with ${BA.PREFIX}`),
         checkChip(c.linkOk, genesis ? 'Genesis link' : `Linked to #${b.index - 1}`),
+        ui.sigChip(c, mine),
       ]),
+      !c.sigOk ? el('div', { class: 'cx-diff' }, [el('p', { text: ui.sigProblem(c) })]) : null,
       !c.hashOk ? el('div', { class: 'cx-diff' }, [
         el('p', { text: 'This block was changed after it was mined. The hash your browser just computed does not match the one stored.' }),
         hashRow('Stored hash', b.hash, 'bad'),
@@ -123,7 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sum = ui.$('#lg-summary');
     sum.className = `cx-summary ${valid ? 'ok' : 'bad'}`;
     sum.textContent = valid
-      ? `Your browser recomputed all ${checked.length} SHA-256 hashes. Every block matches its data and points to the one before it. Nobody has edited the ledger.`
+      ? `Your browser recomputed all ${checked.length} SHA-256 hashes and checked every signature. Every block matches its data and points to the one before it. Nobody has edited the ledger.`
       : `Your browser found ${bad.length} changed block${bad.length > 1 ? 's' : ''}: #${bad.map((c) => c.b.index).join(', #')}. The administrator has been alerted.`;
 
     render();

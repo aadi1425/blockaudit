@@ -63,6 +63,67 @@
     Rohan: ['atlas', 'finance', 'ops'],
   };
 
+  /* ---------- digital signatures (ECDSA P-256) ---------- */
+  // Public keys of the users. Each private key is derived from the user's password at
+  // login (auth.js), so only someone who knows the password can sign as that user.
+  BA.PUBKEYS = {
+    Arjun: { x: 'fbcb126201aaadd787eadb289ddca7ad201259ca25da6cfe9c4b6bd3d2baa0e4', y: 'febdf713db8b8fae93192e059676a1bd78c00da08bee316d8dae4470d5d330da' },
+    Kavya: { x: 'faba1698545a9904273ba20e077c86df871f10b91d8611a692484e6436277daf', y: '3879fbfafcab28327bf46d3d465d335342f23ec712877abfb634c2c88e3b9311' },
+    Rohan: { x: '313287c77f85605c53e3397cf0f0f9f06a4fae9f175c7c5c2215ec99ac22998f', y: '65393d933e6859531753a1b917a1b892701f921af749b048e7af53f1ecdf4e12' },
+  };
+  // Blocks #1–#18 (the starter chain) were mined before signatures existed.
+  // From this block on, every record must carry a valid signature, except failed
+  // logins, which have no signed-in user to sign them.
+  BA.SIGNED_FROM = 19;
+
+  BA.b64url = (hex) => btoa(String.fromCharCode(...BA.bytes(hex)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  // The exact text a user signs: who, what, the decision and when.
+  BA.recordText = (b) =>
+    ['BlockAudit record v1', b.requester, b.resource, b.status, b.timestamp].join('|');
+
+  const pubKeys = {};
+  const publicKey = (user) => {
+    if (!Object.prototype.hasOwnProperty.call(BA.PUBKEYS, user)) return null;
+    if (!pubKeys[user]) {
+      const k = BA.PUBKEYS[user];
+      pubKeys[user] = crypto.subtle.importKey(
+        'jwk', { kty: 'EC', crv: 'P-256', x: BA.b64url(k.x), y: BA.b64url(k.y), ext: true },
+        { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']
+      );
+    }
+    return pubKeys[user];
+  };
+
+  // 'signed' | 'invalid' | 'missing' | 'legacy' (before signatures) | 'system' (failed login) | 'genesis'
+  BA.checkSignature = async (b) => {
+    if (b.index === 0) return 'genesis';
+    if (b.signature === undefined) {
+      if (b.index < BA.SIGNED_FROM) return 'legacy';
+      if (b.resource === 'Login Portal' && b.status === 'REJECTED') return 'system';
+      return 'missing';
+    }
+    const key = publicKey(b.requester);
+    if (!key || !/^[0-9a-f]{128}$/.test(String(b.signature))) return 'invalid';
+    try {
+      const ok = await crypto.subtle.verify(
+        { name: 'ECDSA', hash: 'SHA-256' }, await key, BA.bytes(b.signature), enc.encode(BA.recordText(b))
+      );
+      return ok ? 'signed' : 'invalid';
+    } catch (e) { return 'invalid'; }
+  };
+
+  // Short labels for the signature check, used on every page.
+  BA.SIG_LABEL = {
+    signed: 'Signature valid',
+    invalid: 'Signature INVALID',
+    missing: 'Signature missing',
+    legacy: 'Before signatures',
+    system: 'Failed login, not signed',
+    genesis: 'Genesis',
+  };
+
   /* ---------- terminal log ---------- */
   BA.log = (level, msg) => {
     const log = BA.store.get(BA.KEYS.log, []);
@@ -72,8 +133,12 @@
   };
 
   /* ---------- blocks ---------- */
-  BA.blockData = (b) =>
-    [b.index, b.timestamp, b.requester, b.resource, b.status, b.previousHash, b.nonce].join('|');
+  // The signature, when a block has one, is part of the hashed data too.
+  BA.blockData = (b) => {
+    const parts = [b.index, b.timestamp, b.requester, b.resource, b.status, b.previousHash, b.nonce];
+    if (b.signature !== undefined) parts.push(b.signature);
+    return parts.join('|');
+  };
   BA.hashBlock = (b) => BA.sha256(BA.blockData(b));
 
   // Proof of Work: raise the nonce until the hash starts with "000".
@@ -146,7 +211,8 @@
 
   // Every request, approved or rejected, becomes a block.
   // meta = { kind, votes, yes, reason, faultTriggered }
-  BA.addBlock = async (requester, resource, status, meta, onProgress) => {
+  // sign = async (text) => hex signature, from BA.auth.signRecord (left out for failed logins)
+  BA.addBlock = async (requester, resource, status, meta, onProgress, sign) => {
     const chain = BA.getChain();
     const clean = BA.store.get(BA.KEYS.clean, chain.slice());
     const prev = chain[chain.length - 1];
@@ -160,6 +226,13 @@
       nonce: 0,
       hash: '',
     };
+    if (sign) {
+      const sig = await sign(BA.recordText(b));
+      if (sig) {
+        b.signature = sig;
+        BA.log('info', `Record signed by ${requester} (ECDSA P-256), signature ${sig.slice(0, 16)}…`);
+      }
+    }
     BA.log('info', `Mining block #${b.index} for ${requester} (difficulty ${BA.DIFFICULTY})`);
     const ms = await BA.mine(b, onProgress);
     chain.push(b);
@@ -176,21 +249,34 @@
     return b;
   };
 
-  /* ---------- validation: recompute every hash, check every link ---------- */
+  /* ---------- validation: recompute every hash, check every link and signature ---------- */
+  // One block against its parent. Used by validate() and by every page that lists blocks.
+  BA.checkBlock = async (b, prev) => {
+    const actual = await BA.hashBlock(b);
+    const parent = prev ? prev.hash : '0'.repeat(64);
+    const sig = await BA.checkSignature(b);
+    const hashOk = actual === b.hash;
+    const powOk = String(b.hash).startsWith(BA.PREFIX);
+    const linkOk = b.previousHash === parent;
+    const sigOk = sig !== 'invalid' && sig !== 'missing';
+    return { b, actual, parent, hashOk, powOk, linkOk, sig, sigOk, ok: hashOk && powOk && linkOk && sigOk };
+  };
+
   BA.validate = async (chain) => {
     chain = chain || BA.getChain();
     const issues = [];
     for (let i = 0; i < chain.length; i++) {
-      const b = chain[i];
-      const actual = await BA.hashBlock(b);
-      if (actual !== b.hash) {
-        issues.push({ index: b.index, type: 'hash', stored: b.hash, actual });
-      } else if (!b.hash.startsWith(BA.PREFIX)) {
-        issues.push({ index: b.index, type: 'pow', stored: b.hash, actual });
+      const c = await BA.checkBlock(chain[i], chain[i - 1]);
+      const b = c.b;
+      if (!c.hashOk) {
+        issues.push({ index: b.index, type: 'hash', stored: b.hash, actual: c.actual });
+      } else if (!c.powOk) {
+        issues.push({ index: b.index, type: 'pow', stored: b.hash, actual: c.actual });
       }
-      if (i > 0 && b.previousHash !== chain[i - 1].hash) {
-        issues.push({ index: b.index, type: 'link', stored: b.previousHash, actual: chain[i - 1].hash });
+      if (!c.linkOk) {
+        issues.push({ index: b.index, type: 'link', stored: b.previousHash, actual: c.parent });
       }
+      if (!c.sigOk) issues.push({ index: b.index, type: 'sig', sig: c.sig });
     }
     if (!chain.length) issues.push({ index: 0, type: 'empty' });
     return { valid: issues.length === 0, issues, length: chain.length };
@@ -252,5 +338,45 @@
       rejected: blocks.filter((b) => b.status === 'REJECTED').length,
       last: blocks.length ? blocks[blocks.length - 1].timestamp : null,
     };
+  };
+
+  // Per-account activity for the admin Users page and the printable report.
+  BA.userSummary = () => {
+    const records = BA.getChain().filter((b) => b.index > 0);
+    const isResource = (b) => BA.RESOURCES.some((r) => r.name === b.resource);
+    return Object.keys(BA.USERS).map((user) => {
+      const own = records.filter((b) => b.requester === user);
+      const requests = own.filter(isResource);
+      const failed = records.filter((b) => b.resource === 'Login Portal' && String(b.requester).toLowerCase() === user.toLowerCase());
+      const pages = own.filter((b) => String(b.resource).startsWith('Admin Console'));
+      const times = [...requests, ...failed, ...pages].map((b) => b.timestamp).sort();
+      return {
+        user,
+        role: BA.USERS[user].role,
+        cleared: (BA.ACL[user] || []).map((id) => BA.resourceById(id).name),
+        requests: requests.length,
+        granted: requests.filter((b) => b.status === 'APPROVED').length,
+        denied: requests.filter((b) => b.status === 'REJECTED').length,
+        failedLogins: failed.length,
+        pageAttempts: pages.length,
+        last: times.length ? times[times.length - 1] : null,
+        pubX: BA.PUBKEYS[user] ? BA.PUBKEYS[user].x : null,
+      };
+    });
+  };
+
+  // Failed logins with usernames that are not in the directory, grouped by name.
+  BA.unknownLogins = () => {
+    const known = Object.keys(BA.USERS).map((u) => u.toLowerCase());
+    const out = {};
+    BA.getChain()
+      .filter((b) => b.resource === 'Login Portal' && !known.includes(String(b.requester).toLowerCase()))
+      .forEach((b) => {
+        const k = String(b.requester);
+        out[k] = out[k] || { name: k, count: 0, last: b.timestamp };
+        out[k].count++;
+        out[k].last = b.timestamp;
+      });
+    return Object.values(out);
   };
 })();

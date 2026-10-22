@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Audit report · BlockAudit</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔐%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/core.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/admin-report.js" defer></script>
+</head>
+<body data-root="../" data-guard>
+  <main class="page report">
+    <div class="page-head">
+      <div>
+        <h1>Audit report</h1>
+        <p id="rp-sub">BlockAudit: IAM on Blockchain</p>
+      </div>
+      <button class="btn no-print" type="button" id="rp-print">Print / Save as PDF</button>
+    </div>
+
+    <dl class="rp-facts" id="rp-facts"></dl>
+
+    <section class="section" aria-labelledby="rp-users-h">
+      <h2 id="rp-users-h">Per-user summary</h2>
+      <div class="table-wrap" id="rp-users"></div>
+    </section>
+
+    <section class="section" aria-labelledby="rp-log-h">
+      <h2 id="rp-log-h">Full audit log</h2>
+      <div class="table-wrap" id="rp-log"></div>
+    </section>
+
+    <p class="muted rp-foot" id="rp-foot"></p>
+  </main>
+</body>
+</html>

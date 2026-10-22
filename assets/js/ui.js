@@ -35,6 +35,38 @@
     return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   };
 
+  /* ---------- CSV download ---------- */
+  // rows: array of arrays. Cells that start with = + - @ get a leading ' so a
+  // spreadsheet never runs them as formulas (CSV injection).
+  UI.downloadCsv = (filename, rows) => {
+    const cell = (v) => {
+      let s = v === null || v === undefined ? '' : String(v);
+      if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
+      return `"${s.replace(/"/g, '""')}"`;
+    };
+    const text = '﻿' + rows.map((r) => r.map(cell).join(',')).join('\r\n');
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
+    const a = el('a', { href: url, download: filename });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  // Signature check as a small chip. Grey for blocks that are not meant to be signed.
+  UI.sigChip = (c, showName) => {
+    if (c.sig === 'genesis') return null;
+    const cls = c.sig === 'signed' ? 'ok' : c.sigOk ? 'na' : 'fail';
+    const mark = c.sig === 'signed' ? '✓ ' : c.sigOk ? '· ' : '✗ ';
+    const text = c.sig === 'signed' && showName ? `Signed by ${c.b.requester}` : BA.SIG_LABEL[c.sig];
+    return el('span', { class: `cx-check ${cls}` }, [mark, text]);
+  };
+
+  // Plain-English explanation of a failed signature check.
+  UI.sigProblem = (c) => c.sig === 'missing'
+    ? 'This record should carry its requester\'s signature but has none. The signature was removed or the record was forged.'
+    : 'The signature does not match this record. The requester, resource or result was changed after it was signed. Re-mining cannot fix this without the user\'s private key.';
+
   /* ---------- mining overlay ---------- */
   UI.overlay = {
     show(title, sub) {
@@ -113,7 +145,7 @@
       })
     );
     const logout = el('button', { class: 'btn btn-ghost btn-sm', type: 'button', id: 'logout', text: 'Log out' });
-    const bar = el('header', { class: 'topbar' }, [
+    const bar = el('header', { class: nav.length > 4 ? 'topbar topbar-wide' : 'topbar' }, [
       el('a', { class: 'brand', href: root + nav[0].href }, [
         el('span', { class: 'brand-mark', 'aria-hidden': 'true', text: '🔐' }),
         el('span', { text: 'BlockAudit' }),
@@ -171,6 +203,12 @@
   UI.adminNav = [
     { href: 'admin/overview.html', label: 'Overview' },
     { href: 'admin/chain.html', label: 'Chain explorer' },
+    { href: 'admin/tamper.html', label: 'Tamper test' },
+    { href: 'admin/consensus.html', label: 'Consensus' },
+    { href: 'admin/merkle.html', label: 'Merkle tree' },
+    { href: 'admin/terminal.html', label: 'Terminal' },
+    { href: 'admin/users.html', label: 'Users' },
+    { href: 'admin/report.html', label: 'Report' },
   ];
 
   UI.integrityNotice = (result) => {
