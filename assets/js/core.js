@@ -97,10 +97,35 @@
   BA.getChain = () => BA.store.get(BA.KEYS.chain, []);
   BA.getMeta = () => BA.store.get(BA.KEYS.meta, {});
 
-  // Mines the genesis block the first time the site is opened.
+  // Starter chain shipped with the site (assets/data/seed.json), found from this script's URL.
+  const SEED_URL = document.currentScript
+    ? new URL('../data/seed.json', document.currentScript.src).href
+    : null;
+
+  // Loads the starter chain into an empty browser. Used only if every block still verifies.
+  BA.loadSeed = async () => {
+    if (!SEED_URL) return false;
+    try {
+      const res = await fetch(SEED_URL, { cache: 'no-cache' });
+      if (!res.ok) return false;
+      const seed = await res.json();
+      if (!Array.isArray(seed.chain) || !seed.chain.length) return false;
+      const check = await BA.validate(seed.chain);
+      if (!check.valid) return false;
+      BA.store.set(BA.KEYS.chain, seed.chain);
+      BA.store.set(BA.KEYS.clean, seed.chain.map((b) => Object.assign({}, b)));
+      BA.store.set(BA.KEYS.meta, seed.meta && typeof seed.meta === 'object' ? seed.meta : {});
+      BA.store.set(BA.KEYS.log, Array.isArray(seed.terminal) ? seed.terminal : []);
+      BA.log('info', `Starter chain loaded: ${seed.chain.length} blocks, all hashes verified`);
+      return true;
+    } catch (e) { return false; }
+  };
+
+  // Loads the starter chain, or mines the genesis block, the first time the site is opened.
   BA.init = async () => {
     const chain = BA.getChain();
     if (Array.isArray(chain) && chain.length) return;
+    if (await BA.loadSeed()) return;
     const g = {
       index: 0,
       timestamp: new Date().toISOString(),

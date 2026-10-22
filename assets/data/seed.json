@@ -1,0 +1,1325 @@
+{
+ "chain": [
+  {
+   "index": 0,
+   "timestamp": "2026-10-01T17:35:09.747Z",
+   "requester": "SYSTEM",
+   "resource": "GENESIS",
+   "status": "APPROVED",
+   "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+   "nonce": 1629,
+   "hash": "000adaa7c5ab46ded5d530d42346bf928917a0bf0598738f1bbeb4c1b4258308"
+  },
+  {
+   "index": 1,
+   "timestamp": "2026-10-01T18:05:33.587Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "000adaa7c5ab46ded5d530d42346bf928917a0bf0598738f1bbeb4c1b4258308",
+   "nonce": 856,
+   "hash": "000e6f4ee544aee762a40dfc49e9961112ba8a091f8fc0410da4767fe11887d5"
+  },
+  {
+   "index": 2,
+   "timestamp": "2026-10-01T18:07:43.315Z",
+   "requester": "Rohan",
+   "resource": "Project Atlas",
+   "status": "APPROVED",
+   "previousHash": "000e6f4ee544aee762a40dfc49e9961112ba8a091f8fc0410da4767fe11887d5",
+   "nonce": 11819,
+   "hash": "00081c6c58a84d4a827b27b5262e86f80baed8baebf2af7bb01f14e67a71d6f5"
+  },
+  {
+   "index": 3,
+   "timestamp": "2026-10-01T18:07:49.012Z",
+   "requester": "Rohan",
+   "resource": "Finance Ledger",
+   "status": "APPROVED",
+   "previousHash": "00081c6c58a84d4a827b27b5262e86f80baed8baebf2af7bb01f14e67a71d6f5",
+   "nonce": 12613,
+   "hash": "000470e57f6212554c15098eda0cd59b660866431f11b94a1198afc176166867"
+  },
+  {
+   "index": 4,
+   "timestamp": "2026-10-01T18:07:55.658Z",
+   "requester": "Rohan",
+   "resource": "Classified Intel",
+   "status": "REJECTED",
+   "previousHash": "000470e57f6212554c15098eda0cd59b660866431f11b94a1198afc176166867",
+   "nonce": 6319,
+   "hash": "0001ad1fe21fca11bc8a2c75c6acea3ebd064358874ea34b93d14365e677d3e7"
+  },
+  {
+   "index": 5,
+   "timestamp": "2026-10-01T18:10:12.516Z",
+   "requester": "aadi",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "0001ad1fe21fca11bc8a2c75c6acea3ebd064358874ea34b93d14365e677d3e7",
+   "nonce": 1132,
+   "hash": "000b1c7c93c48f586b37f17fe740a53807f9b2a9bc77954c0b723ed7a4fc11c7"
+  },
+  {
+   "index": 6,
+   "timestamp": "2026-10-01T18:29:14.948Z",
+   "requester": "Rohan",
+   "resource": "HR Vault",
+   "status": "REJECTED",
+   "previousHash": "000b1c7c93c48f586b37f17fe740a53807f9b2a9bc77954c0b723ed7a4fc11c7",
+   "nonce": 1121,
+   "hash": "000ddf05e0b48175931a070761f8ad1a23866c448e14ae0e7433afb71a97ea95"
+  },
+  {
+   "index": 7,
+   "timestamp": "2026-10-01T18:29:49.028Z",
+   "requester": "Rohan",
+   "resource": "Finance Ledger",
+   "status": "APPROVED",
+   "previousHash": "000ddf05e0b48175931a070761f8ad1a23866c448e14ae0e7433afb71a97ea95",
+   "nonce": 11538,
+   "hash": "000eac89e4c88a21df90cd9a1dffb5b4413f80cc4d8c60074d0eb5588eebd213"
+  },
+  {
+   "index": 8,
+   "timestamp": "2026-10-22T05:53:58.955Z",
+   "requester": "Kavya",
+   "resource": "Ops Manual",
+   "status": "APPROVED",
+   "previousHash": "000eac89e4c88a21df90cd9a1dffb5b4413f80cc4d8c60074d0eb5588eebd213",
+   "nonce": 1355,
+   "hash": "000b668da042716af5136b3e3a0bbd33739f3411700a8e9b7ddd8597a1fca3a0"
+  },
+  {
+   "index": 9,
+   "timestamp": "2026-10-22T05:54:01.381Z",
+   "requester": "Kavya",
+   "resource": "HR Vault",
+   "status": "APPROVED",
+   "previousHash": "000b668da042716af5136b3e3a0bbd33739f3411700a8e9b7ddd8597a1fca3a0",
+   "nonce": 3670,
+   "hash": "000a6e46e1e3e0d10279c9f90b7160105b629502c4c4b38381f81d4d3918505c"
+  },
+  {
+   "index": 10,
+   "timestamp": "2026-10-22T05:54:04.292Z",
+   "requester": "Kavya",
+   "resource": "Classified Intel",
+   "status": "REJECTED",
+   "previousHash": "000a6e46e1e3e0d10279c9f90b7160105b629502c4c4b38381f81d4d3918505c",
+   "nonce": 90,
+   "hash": "0003cc69de2eb6f4ddf96def680fee9a2a4bc6a281b8708398d7b423e0c79996"
+  },
+  {
+   "index": 11,
+   "timestamp": "2026-10-22T05:54:08.658Z",
+   "requester": "Kavya",
+   "resource": "Project Atlas",
+   "status": "REJECTED",
+   "previousHash": "0003cc69de2eb6f4ddf96def680fee9a2a4bc6a281b8708398d7b423e0c79996",
+   "nonce": 4768,
+   "hash": "00077bc688fbdd2500948195f9736cc20b39e1b6de41126962dbf39c9ae2ada5"
+  },
+  {
+   "index": 12,
+   "timestamp": "2026-10-22T05:56:35.398Z",
+   "requester": "Kavya",
+   "resource": "Ops Manual",
+   "status": "APPROVED",
+   "previousHash": "00077bc688fbdd2500948195f9736cc20b39e1b6de41126962dbf39c9ae2ada5",
+   "nonce": 438,
+   "hash": "000ca1caad98833f4c2f1e49796992db554512474b8b239cc6768ff64f304b9f"
+  },
+  {
+   "index": 13,
+   "timestamp": "2026-10-22T06:06:49.717Z",
+   "requester": "Kavya",
+   "resource": "Admin Console (overview.html)",
+   "status": "REJECTED",
+   "previousHash": "000ca1caad98833f4c2f1e49796992db554512474b8b239cc6768ff64f304b9f",
+   "nonce": 1187,
+   "hash": "000cad73f97619b719048cf652220ccedc5ec23c148ca004d4b87f0eacabc339"
+  },
+  {
+   "index": 14,
+   "timestamp": "2026-10-22T06:22:57.792Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "000cad73f97619b719048cf652220ccedc5ec23c148ca004d4b87f0eacabc339",
+   "nonce": 351,
+   "hash": "0002c5970d5a960f37049f84ad6747e2a0852b3f528c6782d96cfc76f8c451a7"
+  },
+  {
+   "index": 15,
+   "timestamp": "2026-10-22T06:23:03.057Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "0002c5970d5a960f37049f84ad6747e2a0852b3f528c6782d96cfc76f8c451a7",
+   "nonce": 931,
+   "hash": "000aeca9407467d63364f92f2c8d6fdb5729c8e719916f29ceb8a49bbf0670c7"
+  },
+  {
+   "index": 16,
+   "timestamp": "2026-10-22T06:23:05.498Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "000aeca9407467d63364f92f2c8d6fdb5729c8e719916f29ceb8a49bbf0670c7",
+   "nonce": 261,
+   "hash": "0007803ad580b3e888d5ca3f7d2ef82154d7a8193dcffc4eaa032b53275f7171"
+  },
+  {
+   "index": 17,
+   "timestamp": "2026-10-22T06:23:07.443Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "0007803ad580b3e888d5ca3f7d2ef82154d7a8193dcffc4eaa032b53275f7171",
+   "nonce": 3493,
+   "hash": "0008ce9044b4b8a7dd62c4365cd7023c199af521371b816d43c476d28dd71440"
+  },
+  {
+   "index": 18,
+   "timestamp": "2026-10-22T06:23:11.266Z",
+   "requester": "rohan",
+   "resource": "Login Portal",
+   "status": "REJECTED",
+   "previousHash": "0008ce9044b4b8a7dd62c4365cd7023c199af521371b816d43c476d28dd71440",
+   "nonce": 703,
+   "hash": "000d6312ce5c7f2327dba1999865c8a4e2da1d1427b0a8bc93e4a50e55534231"
+  }
+ ],
+ "meta": {
+  "1": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "2": {
+   "kind": "resource",
+   "resourceId": "atlas",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "3": {
+   "kind": "resource",
+   "resourceId": "finance",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "4": {
+   "kind": "resource",
+   "resourceId": "intel",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": false,
+     "faulty": false
+    }
+   ],
+   "yes": 0,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": "Classified Intel needs top-secret clearance. No standard account holds it."
+  },
+  "5": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "6": {
+   "kind": "resource",
+   "resourceId": "hr",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": false,
+     "faulty": false
+    }
+   ],
+   "yes": 0,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": "Rohan is not on the access list for HR Vault. Ask your manager to grant access."
+  },
+  "7": {
+   "kind": "resource",
+   "resourceId": "finance",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "8": {
+   "kind": "resource",
+   "resourceId": "ops",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "9": {
+   "kind": "resource",
+   "resourceId": "hr",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "10": {
+   "kind": "resource",
+   "resourceId": "intel",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": false,
+     "faulty": false
+    }
+   ],
+   "yes": 0,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": "Classified Intel needs top-secret clearance. No standard account holds it."
+  },
+  "11": {
+   "kind": "resource",
+   "resourceId": "atlas",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": false
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": true
+    }
+   ],
+   "yes": 1,
+   "faultTriggered": true,
+   "deviated": true,
+   "reason": "Kavya is not on the access list for Project Atlas. Ask your manager to grant access."
+  },
+  "12": {
+   "kind": "resource",
+   "resourceId": "ops",
+   "votes": [
+    {
+     "node": "Node 1",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 2",
+     "role": "honest",
+     "vote": true
+    },
+    {
+     "node": "Node 3",
+     "role": "fault-prone",
+     "vote": true,
+     "faulty": false
+    }
+   ],
+   "yes": 3,
+   "faultTriggered": false,
+   "deviated": false,
+   "reason": ""
+  },
+  "13": {
+   "kind": "page",
+   "reason": "Standard accounts cannot open the admin console."
+  },
+  "14": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "15": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "16": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "17": {
+   "kind": "login",
+   "reason": "Wrong password."
+  },
+  "18": {
+   "kind": "login",
+   "reason": "Wrong password."
+  }
+ },
+ "terminal": [
+  {
+   "t": "2026-10-01T17:35:10.195Z",
+   "level": "info",
+   "msg": "Blockchain initialised"
+  },
+  {
+   "t": "2026-10-01T17:35:10.195Z",
+   "level": "success",
+   "msg": "Genesis block #0 mined in 447 ms, nonce 1629, hash 000adaa7c5ab46ded5d530d42346bf928917a0bf0598738f1bbeb4c1b4258308"
+  },
+  {
+   "t": "2026-10-01T17:35:59.600Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session d772733bc252bcd2"
+  },
+  {
+   "t": "2026-10-01T17:46:50.370Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-01T18:05:33.586Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-01T18:05:33.587Z",
+   "level": "info",
+   "msg": "Mining block #1 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:05:33.673Z",
+   "level": "error",
+   "msg": "Block #1 mined in 86 ms, nonce 856, REJECTED, hash 000e6f4ee544aee762a40dfc49e9961112ba8a091f8fc0410da4767fe11887d5"
+  },
+  {
+   "t": "2026-10-01T18:05:37.483Z",
+   "level": "success",
+   "msg": "Session started: Rohan (user), session 2345fead25b5071a"
+  },
+  {
+   "t": "2026-10-01T18:07:36.369Z",
+   "level": "success",
+   "msg": "Session started: Rohan (user), session c940d2128795e012"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "info",
+   "msg": "Request: Rohan → Project Atlas"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-01T18:07:43.315Z",
+   "level": "info",
+   "msg": "Mining block #2 for Rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:07:45.009Z",
+   "level": "success",
+   "msg": "Block #2 mined in 1692 ms, nonce 11819, APPROVED, hash 00081c6c58a84d4a827b27b5262e86f80baed8baebf2af7bb01f14e67a71d6f5"
+  },
+  {
+   "t": "2026-10-01T18:07:49.011Z",
+   "level": "info",
+   "msg": "Request: Rohan → Finance Ledger"
+  },
+  {
+   "t": "2026-10-01T18:07:49.011Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:49.011Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:49.011Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:07:49.011Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-01T18:07:49.012Z",
+   "level": "info",
+   "msg": "Mining block #3 for Rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:07:50.929Z",
+   "level": "success",
+   "msg": "Block #3 mined in 1917 ms, nonce 12613, APPROVED, hash 000470e57f6212554c15098eda0cd59b660866431f11b94a1198afc176166867"
+  },
+  {
+   "t": "2026-10-01T18:07:55.657Z",
+   "level": "info",
+   "msg": "Request: Rohan → Classified Intel"
+  },
+  {
+   "t": "2026-10-01T18:07:55.658Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:07:55.658Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:07:55.658Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:07:55.658Z",
+   "level": "error",
+   "msg": "  Consensus 0/3 → REJECTED"
+  },
+  {
+   "t": "2026-10-01T18:07:55.658Z",
+   "level": "info",
+   "msg": "Mining block #4 for Rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:07:56.469Z",
+   "level": "error",
+   "msg": "Block #4 mined in 810 ms, nonce 6319, REJECTED, hash 0001ad1fe21fca11bc8a2c75c6acea3ebd064358874ea34b93d14365e677d3e7"
+  },
+  {
+   "t": "2026-10-01T18:07:56.469Z",
+   "level": "error",
+   "msg": "SECURITY: unauthorised request by Rohan for Classified Intel recorded in block #4"
+  },
+  {
+   "t": "2026-10-01T18:09:58.216Z",
+   "level": "info",
+   "msg": "Session ended: Rohan (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-01T18:10:12.515Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"aadi\" (wrong password)"
+  },
+  {
+   "t": "2026-10-01T18:10:12.516Z",
+   "level": "info",
+   "msg": "Mining block #5 for aadi (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:10:12.616Z",
+   "level": "error",
+   "msg": "Block #5 mined in 99 ms, nonce 1132, REJECTED, hash 000b1c7c93c48f586b37f17fe740a53807f9b2a9bc77954c0b723ed7a4fc11c7"
+  },
+  {
+   "t": "2026-10-01T18:10:27.819Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session ee6426f2f0bd1c00"
+  },
+  {
+   "t": "2026-10-01T18:25:14.837Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-01T18:26:56.545Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session 1531ec577d132a21"
+  },
+  {
+   "t": "2026-10-01T18:28:35.297Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-01T18:28:49.523Z",
+   "level": "success",
+   "msg": "Session started: Rohan (user), session c6d7a8686586161a"
+  },
+  {
+   "t": "2026-10-01T18:29:14.948Z",
+   "level": "info",
+   "msg": "Request: Rohan → HR Vault"
+  },
+  {
+   "t": "2026-10-01T18:29:14.948Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:29:14.948Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:29:14.948Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted NO"
+  },
+  {
+   "t": "2026-10-01T18:29:14.948Z",
+   "level": "error",
+   "msg": "  Consensus 0/3 → REJECTED"
+  },
+  {
+   "t": "2026-10-01T18:29:14.949Z",
+   "level": "info",
+   "msg": "Mining block #6 for Rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:29:15.062Z",
+   "level": "error",
+   "msg": "Block #6 mined in 113 ms, nonce 1121, REJECTED, hash 000ddf05e0b48175931a070761f8ad1a23866c448e14ae0e7433afb71a97ea95"
+  },
+  {
+   "t": "2026-10-01T18:29:15.063Z",
+   "level": "error",
+   "msg": "SECURITY: unauthorised request by Rohan for HR Vault recorded in block #6"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "info",
+   "msg": "Request: Rohan → Finance Ledger"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-01T18:29:49.028Z",
+   "level": "info",
+   "msg": "Mining block #7 for Rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-01T18:29:50.681Z",
+   "level": "success",
+   "msg": "Block #7 mined in 1651 ms, nonce 11538, APPROVED, hash 000eac89e4c88a21df90cd9a1dffb5b4413f80cc4d8c60074d0eb5588eebd213"
+  },
+  {
+   "t": "2026-10-01T18:30:19.729Z",
+   "level": "info",
+   "msg": "Session ended: Rohan (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-01T18:30:44.731Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session edabd8f5014aceeb"
+  },
+  {
+   "t": "2026-10-01T19:53:47.162Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (Your session reached its 30-minute limit. Sign in again.)"
+  },
+  {
+   "t": "2026-10-01T21:40:07.543Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session 5446c7cfa8c8a67a"
+  },
+  {
+   "t": "2026-10-01T21:58:45.840Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-01T22:02:55.655Z",
+   "level": "success",
+   "msg": "Session started: Rohan (user), session 272d1f7f3d3cc404"
+  },
+  {
+   "t": "2026-10-01T22:03:42.778Z",
+   "level": "info",
+   "msg": "Session ended: Rohan (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-01T22:03:50.429Z",
+   "level": "success",
+   "msg": "Session started: Kavya (user), session 1e14346f06d7b57e"
+  },
+  {
+   "t": "2026-10-22T05:53:32.725Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session 7537b912e968ca51"
+  },
+  {
+   "t": "2026-10-22T05:53:44.378Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-22T05:53:52.988Z",
+   "level": "success",
+   "msg": "Session started: Kavya (user), session 53bdb37d2957e9f6"
+  },
+  {
+   "t": "2026-10-22T05:53:58.954Z",
+   "level": "info",
+   "msg": "Request: Kavya → Ops Manual"
+  },
+  {
+   "t": "2026-10-22T05:53:58.954Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:53:58.954Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:53:58.954Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:53:58.955Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-22T05:53:58.955Z",
+   "level": "info",
+   "msg": "Mining block #8 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T05:53:59.065Z",
+   "level": "success",
+   "msg": "Block #8 mined in 109 ms, nonce 1355, APPROVED, hash 000b668da042716af5136b3e3a0bbd33739f3411700a8e9b7ddd8597a1fca3a0"
+  },
+  {
+   "t": "2026-10-22T05:54:01.379Z",
+   "level": "info",
+   "msg": "Request: Kavya → HR Vault"
+  },
+  {
+   "t": "2026-10-22T05:54:01.380Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:54:01.380Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:54:01.380Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:54:01.380Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-22T05:54:01.381Z",
+   "level": "info",
+   "msg": "Mining block #9 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T05:54:01.730Z",
+   "level": "success",
+   "msg": "Block #9 mined in 349 ms, nonce 3670, APPROVED, hash 000a6e46e1e3e0d10279c9f90b7160105b629502c4c4b38381f81d4d3918505c"
+  },
+  {
+   "t": "2026-10-22T05:54:04.291Z",
+   "level": "info",
+   "msg": "Request: Kavya → Classified Intel"
+  },
+  {
+   "t": "2026-10-22T05:54:04.291Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-22T05:54:04.292Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-22T05:54:04.292Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted NO"
+  },
+  {
+   "t": "2026-10-22T05:54:04.292Z",
+   "level": "error",
+   "msg": "  Consensus 0/3 → REJECTED"
+  },
+  {
+   "t": "2026-10-22T05:54:04.292Z",
+   "level": "info",
+   "msg": "Mining block #10 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T05:54:04.301Z",
+   "level": "error",
+   "msg": "Block #10 mined in 7 ms, nonce 90, REJECTED, hash 0003cc69de2eb6f4ddf96def680fee9a2a4bc6a281b8708398d7b423e0c79996"
+  },
+  {
+   "t": "2026-10-22T05:54:04.302Z",
+   "level": "error",
+   "msg": "SECURITY: unauthorised request by Kavya for Classified Intel recorded in block #10"
+  },
+  {
+   "t": "2026-10-22T05:54:08.656Z",
+   "level": "info",
+   "msg": "Request: Kavya → Project Atlas"
+  },
+  {
+   "t": "2026-10-22T05:54:08.657Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-22T05:54:08.657Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted NO"
+  },
+  {
+   "t": "2026-10-22T05:54:08.657Z",
+   "level": "warn",
+   "msg": "  Node 3 (fault-prone) voted YES [random fault triggered]"
+  },
+  {
+   "t": "2026-10-22T05:54:08.658Z",
+   "level": "error",
+   "msg": "  Consensus 1/3 → REJECTED"
+  },
+  {
+   "t": "2026-10-22T05:54:08.658Z",
+   "level": "info",
+   "msg": "Mining block #11 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T05:54:09.109Z",
+   "level": "error",
+   "msg": "Block #11 mined in 450 ms, nonce 4768, REJECTED, hash 00077bc688fbdd2500948195f9736cc20b39e1b6de41126962dbf39c9ae2ada5"
+  },
+  {
+   "t": "2026-10-22T05:54:09.109Z",
+   "level": "error",
+   "msg": "SECURITY: unauthorised request by Kavya for Project Atlas recorded in block #11"
+  },
+  {
+   "t": "2026-10-22T05:56:35.397Z",
+   "level": "info",
+   "msg": "Request: Kavya → Ops Manual"
+  },
+  {
+   "t": "2026-10-22T05:56:35.398Z",
+   "level": "info",
+   "msg": "  Node 1 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:56:35.398Z",
+   "level": "info",
+   "msg": "  Node 2 (honest) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:56:35.398Z",
+   "level": "info",
+   "msg": "  Node 3 (fault-prone) voted YES"
+  },
+  {
+   "t": "2026-10-22T05:56:35.398Z",
+   "level": "success",
+   "msg": "  Consensus 3/3 → APPROVED"
+  },
+  {
+   "t": "2026-10-22T05:56:35.399Z",
+   "level": "info",
+   "msg": "Mining block #12 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T05:56:35.416Z",
+   "level": "success",
+   "msg": "Block #12 mined in 17 ms, nonce 438, APPROVED, hash 000ca1caad98833f4c2f1e49796992db554512474b8b239cc6768ff64f304b9f"
+  },
+  {
+   "t": "2026-10-22T05:58:03.319Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:04.798Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:06.049Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:49.482Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:50.102Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:50.328Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:50.528Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T05:58:50.695Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:06:49.716Z",
+   "level": "error",
+   "msg": "SECURITY: Kavya tried to open admin page \"overview.html\". Blocked."
+  },
+  {
+   "t": "2026-10-22T06:06:49.717Z",
+   "level": "info",
+   "msg": "Mining block #13 for Kavya (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:06:49.811Z",
+   "level": "error",
+   "msg": "Block #13 mined in 94 ms, nonce 1187, REJECTED, hash 000cad73f97619b719048cf652220ccedc5ec23c148ca004d4b87f0eacabc339"
+  },
+  {
+   "t": "2026-10-22T06:17:32.175Z",
+   "level": "info",
+   "msg": "Session ended: Kavya (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-22T06:22:57.792Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-22T06:22:57.793Z",
+   "level": "info",
+   "msg": "Mining block #14 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:22:57.802Z",
+   "level": "error",
+   "msg": "Block #14 mined in 9 ms, nonce 351, REJECTED, hash 0002c5970d5a960f37049f84ad6747e2a0852b3f528c6782d96cfc76f8c451a7"
+  },
+  {
+   "t": "2026-10-22T06:23:03.057Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-22T06:23:03.057Z",
+   "level": "info",
+   "msg": "Mining block #15 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:23:03.112Z",
+   "level": "error",
+   "msg": "Block #15 mined in 54 ms, nonce 931, REJECTED, hash 000aeca9407467d63364f92f2c8d6fdb5729c8e719916f29ceb8a49bbf0670c7"
+  },
+  {
+   "t": "2026-10-22T06:23:05.498Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-22T06:23:05.498Z",
+   "level": "info",
+   "msg": "Mining block #16 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:23:05.503Z",
+   "level": "error",
+   "msg": "Block #16 mined in 4 ms, nonce 261, REJECTED, hash 0007803ad580b3e888d5ca3f7d2ef82154d7a8193dcffc4eaa032b53275f7171"
+  },
+  {
+   "t": "2026-10-22T06:23:07.443Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-22T06:23:07.444Z",
+   "level": "info",
+   "msg": "Mining block #17 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:23:07.778Z",
+   "level": "error",
+   "msg": "Block #17 mined in 333 ms, nonce 3493, REJECTED, hash 0008ce9044b4b8a7dd62c4365cd7023c199af521371b816d43c476d28dd71440"
+  },
+  {
+   "t": "2026-10-22T06:23:11.265Z",
+   "level": "error",
+   "msg": "SECURITY: failed login for \"rohan\" (wrong password)"
+  },
+  {
+   "t": "2026-10-22T06:23:11.266Z",
+   "level": "info",
+   "msg": "Mining block #18 for rohan (difficulty 3)"
+  },
+  {
+   "t": "2026-10-22T06:23:11.295Z",
+   "level": "error",
+   "msg": "Block #18 mined in 28 ms, nonce 703, REJECTED, hash 000d6312ce5c7f2327dba1999865c8a4e2da1d1427b0a8bc93e4a50e55534231"
+  },
+  {
+   "t": "2026-10-22T06:23:11.295Z",
+   "level": "warn",
+   "msg": "SECURITY: \"rohan\" locked for 60s after 5 failures"
+  },
+  {
+   "t": "2026-10-22T06:23:14.799Z",
+   "level": "warn",
+   "msg": "Login blocked: account \"rohan\" is locked (57s left)"
+  },
+  {
+   "t": "2026-10-22T06:23:39.144Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session 9b6081ddb21bd94d"
+  },
+  {
+   "t": "2026-10-22T06:23:58.020Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-22T06:24:05.668Z",
+   "level": "success",
+   "msg": "Session started: Kavya (user), session 844ee72a0dc4273f"
+  },
+  {
+   "t": "2026-10-22T06:24:27.292Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:28.328Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:28.656Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:29.082Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:29.249Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:29.446Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:29.631Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:29.836Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:30.034Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:30.221Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:30.380Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:30.585Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:32.610Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:33.215Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:33.674Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:34.162Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:24:34.489Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:26:38.402Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:28:40.516Z",
+   "level": "info",
+   "msg": "Kavya verified the public ledger: VALID"
+  },
+  {
+   "t": "2026-10-22T06:38:09.980Z",
+   "level": "info",
+   "msg": "Session ended: Kavya (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-22T06:38:23.727Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session 4cb186c0821e4350"
+  },
+  {
+   "t": "2026-10-22T06:49:32.170Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-22T07:09:42.862Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session aef90bd73dc8475b"
+  },
+  {
+   "t": "2026-10-22T07:09:42.968Z",
+   "level": "error",
+   "msg": "INTEGRITY: chain check failed on page load (overview.html), first issue at block #1"
+  },
+  {
+   "t": "2026-10-22T07:10:04.609Z",
+   "level": "error",
+   "msg": "INTEGRITY: chain check failed on page load (chain.html), first issue at block #1"
+  },
+  {
+   "t": "2026-10-22T08:45:22.939Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (Your session reached its 30-minute limit. Sign in again.)"
+  },
+  {
+   "t": "2026-10-22T08:49:17.915Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session ff4b3ce7eedae2fb"
+  },
+  {
+   "t": "2026-10-22T08:51:18.859Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You have been logged out.)"
+  },
+  {
+   "t": "2026-10-22T08:51:28.519Z",
+   "level": "success",
+   "msg": "Session started: Rohan (user), session d1908658ddf5a8e1"
+  },
+  {
+   "t": "2026-10-22T09:10:24.160Z",
+   "level": "info",
+   "msg": "Session ended: Rohan (You were signed out after 10 minutes of inactivity.)"
+  },
+  {
+   "t": "2026-10-22T09:14:31.855Z",
+   "level": "success",
+   "msg": "Session started: Aadi (admin), session d0a3f0ff71964aff"
+  },
+  {
+   "t": "2026-10-22T09:25:32.159Z",
+   "level": "info",
+   "msg": "Session ended: Aadi (You were signed out after 10 minutes of inactivity.)"
+  }
+ ]
+}

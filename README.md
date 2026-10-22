@@ -33,6 +33,8 @@ Open http://localhost:8080. To stop: `docker stop blockaudit && docker rm blocka
 ## Honest limits
 - Logins are checked in the browser; a real deployment would check them on a server.
 - The Public ledger hides other users' names on screen only; the full chain is in localStorage.
+- Every visitor starts from the same starter chain (`assets/data/seed.json`, checked before use);
+  after that each browser keeps its own copy, so new blocks are not shared between visitors.
 - One chain copy in one browser: someone with DevTools could edit a block and re-mine
   every block after it (difficulty `000` is fast). Multiple nodes (planned) close this gap.
 

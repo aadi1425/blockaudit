@@ -71,7 +71,8 @@ the Content-Security-Policy blocks the scripts.
 - Live: GitHub Pages at `https://aadi1425.github.io/blockaudit` (repo `aadi1425/blockaudit`, branch `main`, root folder)
 
 Reset all data: browser DevTools → Application → clear Local Storage and Session Storage → refresh.
-The genesis block mines again.
+The starter chain from `assets/data/seed.json` loads again (if that file is missing or fails
+validation, a fresh genesis block is mined instead).
 
 ## 5. Architecture
 
@@ -86,6 +87,7 @@ blockaudit/
 ├── admin/overview.html     admin: stats, recent activity, alerts
 ├── admin/chain.html        admin: chain explorer (every block, full hashes, live re-check)
 ├── assets/css/style.css    all styles (one file)
+├── assets/data/seed.json   starter chain { chain, meta, terminal } loaded into an empty browser
 ├── assets/js/core.js       BA core: storage, SHA-256, mining, chain, validation, consensus, ACL, Merkle, log
 ├── assets/js/auth.js       login, PBKDF2, lockout, signed sessions, guard(), reveal(), timeouts
 ├── assets/js/ui.js         BA.ui helpers: el(), topbar, nav lists, modal, alerts, overlay, seal
@@ -114,7 +116,7 @@ blockaudit/
 
 ### Key core.js functions
 `BA.sha256(text)`, `BA.hashBlock(b)`, `BA.mine(block, onProgress)`, `BA.getChain()`, `BA.getMeta()`,
-`BA.init()` (mines genesis once), `BA.addBlock(requester, resource, status, meta, onProgress)`,
+`BA.init()` (loads the starter chain via `BA.loadSeed()`, else mines genesis — once), `BA.addBlock(requester, resource, status, meta, onProgress)`,
 `BA.validate(chain)` → `{ valid, issues:[{index,type:'hash'|'pow'|'link'|'empty',stored,actual}], length }`,
 `BA.consensus(requester, resourceId)` → `{ votes, yes, approved, allowed, faultTriggered, deviated }`,
 `BA.denyReason()`, `BA.merkle(chain)` → `{ levels, root }`, `BA.statsFor(user|null)`, `BA.log(level, msg)`.
@@ -190,9 +192,10 @@ git push
 - [x] User pages: request access, my history
 - [x] Admin overview
 - [x] Docker + nginx security headers
-- [ ] Aadi runs it in VS Code with Live Server and passes the Section 7 tests
+- [x] Aadi runs it in VS Code with Live Server and passes the Section 7 tests
 - [ ] Report screenshots taken
-- [ ] Pushed to GitHub, GitHub Pages live at https://aadi1425.github.io/blockaudit
+- [x] Pushed to GitHub, GitHub Pages live at https://aadi1425.github.io/blockaudit
+- [x] Starter chain: Live Server test activity ships in `assets/data/seed.json` so every visitor starts with it
 
 ### Part 2 — Remaining admin pages
 - [x] Chain explorer (`admin/chain.html`) — full hash, prev hash, nonce, votes, live re-check, filter, order, copy
@@ -230,6 +233,13 @@ git push
   but not implemented — either add a light version or word them as "discussed".
 
 ## 9. Progress log (newest at top — add a line after every change)
+
+- 2026-10-22 — Starter chain: copied the 19 blocks, votes and terminal log from Aadi's Live Server
+  browser into `assets/data/seed.json`. `BA.loadSeed()` in `core.js` fetches it when the browser
+  has no chain, runs `BA.validate()` on it and only then stores chain, clean copy, meta and log;
+  otherwise genesis is mined as before. Signing key, lockouts and sessions are not copied.
+  Tested on a fresh origin (localhost:8000): 19 blocks VALID, no console errors, reload keeps data.
+  Each visitor's browser then grows its own copy — new blocks are not shared between visitors.
 
 - 2026-10-02 — README: added "Pages" and "Honest limits" sections.
 - 2026-10-02 — Added Public ledger for users: `user/ledger.html`, `assets/js/user-ledger.js`,
