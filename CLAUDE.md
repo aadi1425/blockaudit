@@ -88,7 +88,7 @@ blockaudit/
 ├── admin/chain.html        admin: chain explorer (every block, full hashes, signature, live re-check, CSV export)
 ├── admin/tamper.html       admin: tamper test (edit, re-mine like an attacker, validate, reset from ba_chain_clean)
 ├── admin/consensus.html    admin: every consensus round, Node 3 random votes marked
-├── admin/merkle.html       admin: Merkle tree, root on top, nodes that differ from ba_chain_clean in red
+├── admin/merkle.html       admin: Merkle tree as SVG (sideways or top-down), click a record for its Merkle proof, nodes that differ from ba_chain_clean in red
 ├── admin/terminal.html     admin: ba_terminal log, coloured by level, filter, follow
 ├── admin/users.html        admin: per-account activity, access list, public key
 ├── admin/report.html       admin: printable audit report (@media print in style.css)
@@ -256,6 +256,12 @@ git push
   either add a light version or word it as "discussed". Digital signatures are now implemented.
 
 ## 9. Progress log (newest at top — add a line after every change)
+
+- 2026-10-22 — Merkle tree redrawn as an SVG diagram: lines from every node to its parent,
+  Sideways (default, fits the page) / Top-down toggle, legend, record name + result on each leaf.
+  Clicking a record shows its Merkle proof: the sibling hashes, each step recomputed with SHA-256,
+  and whether the rebuilt root matches; a changed record also says it no longer proves the
+  original root. Headless-Chrome screenshots checked at 1366 and 390 px, no JS errors.
 
 - 2026-10-22 — Part 2 built. Digital signatures: ECDSA P-256 keys derived from passwords
   (`SIG_SALTS` in auth.js, `BA.PUBKEYS` in core.js), every request and admin-page attempt

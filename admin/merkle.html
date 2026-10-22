@@ -39,8 +39,24 @@
       <span class="cx-hash mono" id="mk-root">—</span>
     </div>
 
-    <p class="muted mk-hint">Scroll sideways to see every leaf. Red nodes differ from the untouched copy. Hover a node for its full hash.</p>
-    <div class="mk-scroll"><div class="mk-tree" id="mk-tree"></div></div>
+    <div class="mk-toolbar">
+      <div class="mk-seg" role="group" aria-label="Tree layout">
+        <button class="btn btn-ghost btn-sm" type="button" data-layout="side" aria-pressed="true">Sideways</button>
+        <button class="btn btn-ghost btn-sm" type="button" data-layout="top" aria-pressed="false">Top-down</button>
+      </div>
+      <ul class="mk-legend" aria-label="Legend">
+        <li><span class="mk-key root"></span>Root</li>
+        <li><span class="mk-key"></span>Hash of two below</li>
+        <li><span class="mk-key leaf"></span>Record (leaf)</li>
+        <li><span class="mk-key path"></span>Proof path</li>
+        <li><span class="mk-key sib"></span>Sibling used in proof</li>
+        <li><span class="mk-key bad"></span>Changed</li>
+      </ul>
+    </div>
+
+    <section class="mk-proof" id="mk-proof" aria-live="polite"></section>
+
+    <div class="mk-box" id="mk-tree"></div>
   </main>
 </body>
 </html>
