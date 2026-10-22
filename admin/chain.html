@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Chain explorer · BlockAudit</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔐%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/core.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/admin-chain.js" defer></script>
+</head>
+<body data-root="../" data-guard>
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1>Chain explorer</h1>
+        <p>Every block on the ledger, its SHA-256 hash, and a live check of the hash pointer chain.</p>
+      </div>
+      <button class="btn btn-ghost" type="button" id="recheck">Re-check chain</button>
+    </div>
+
+    <div class="stats stats-4">
+      <div class="stat"><div class="stat-value" id="cx-blocks">0</div><div class="stat-label">Blocks</div></div>
+      <div class="stat" id="cx-status-box"><div class="stat-value" id="cx-status">…</div><div class="stat-label">Chain status</div></div>
+      <div class="stat"><div class="stat-value" id="cx-diff">000</div><div class="stat-label">PoW target prefix</div></div>
+      <div class="stat"><div class="stat-value" id="cx-checked">—</div><div class="stat-label">Last checked</div></div>
+    </div>
+
+    <div class="cx-summary" id="cx-summary" role="status" aria-live="polite"></div>
+
+    <div class="cx-toolbar">
+      <div class="field">
+        <label for="cx-filter">Show</label>
+        <select class="input" id="cx-filter">
+          <option value="all">All blocks</option>
+          <option value="APPROVED">Approved only</option>
+          <option value="REJECTED">Rejected only</option>
+          <option value="bad">Tampered only</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cx-search">User or resource</label>
+        <input class="input" id="cx-search" type="search" maxlength="40" autocomplete="off" placeholder="e.g. Rohan">
+      </div>
+      <div class="field">
+        <label for="cx-order">Order</label>
+        <select class="input" id="cx-order">
+          <option value="desc">Newest first</option>
+          <option value="asc">Oldest first (genesis on top)</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="muted cx-count" id="cx-count"></p>
+    <div class="cx-list" id="cx-list"></div>
+  </main>
+</body>
+</html>
