@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? `✓ The rebuilt root matches the current Merkle root. ${steps.length} sibling hashes were enough to prove this record is in the tree, without reading the other ${L[0].length - 1} records.`
         : '✗ The rebuilt root does not match the Merkle root.' }),
       changedLeaf ? el('p', { class: 'mk-verdict bad', text:
-        `✗ This record was changed: its leaf hash differs from the untouched copy. The proof leads to a different root (${short(data.live.root)}) than the original (${short(data.ref.root)}), so anyone holding the original root would reject it.` }) : null,
+        `✗ This record was changed: its leaf hash differs from the untouched copy. The proof leads to a different root (${short(data.live.root)}) than the original (${short(data.ref.root)}), so anyone holding the original root would reject it.` }) : '',
     );
   };
 

@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkChip(c.linkOk, `Linked to #${i - 1}`),
         ui.sigChip(c, true),
       ]),
-      !c.sigOk ? el('div', { class: 'cx-diff' }, [el('p', { text: ui.sigProblem(c) })]) : null,
+      !c.sigOk ? el('div', { class: 'cx-diff' }, [el('p', { text: ui.sigProblem(c) })]) : '',
     );
   };
 

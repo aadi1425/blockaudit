@@ -94,7 +94,8 @@ blockaudit/
 ├── admin/report.html       admin: printable audit report (@media print in style.css)
 ├── assets/css/style.css    all styles (one file)
 ├── assets/data/seed.json   starter chain { chain, meta, terminal } loaded into an empty browser
-├── assets/img/nfsu-logo.png, nfsu-crest.png   NFSU logo (login + report) and crest (topbar), shown on a white card
+├── assets/img/nfsu-logo-dark.png, nfsu-crest.png   NFSU logo (login + report) and crest (topbar): transparent, light lettering
+├── assets/img/nfsu-logo.png    original NFSU logo (navy on white), used only when printing the report
 ├── assets/js/core.js       BA core: storage, SHA-256, mining, chain, validation, consensus, ACL, Merkle, log
 ├── assets/js/auth.js       login, PBKDF2, lockout, signed sessions, guard(), reveal(), timeouts
 ├── assets/js/ui.js         BA.ui helpers: el(), topbar, nav lists, modal, alerts, overlay, seal
@@ -257,6 +258,13 @@ git push
   either add a light version or word it as "discussed". Digital signatures are now implemented.
 
 ## 9. Progress log (newest at top — add a line after every change)
+
+- 2026-10-23 — Logo blends in: made `nfsu-logo-dark.png` / `nfsu-crest.png` (white background
+  transparent, navy lettering light, red tagline light red, shield keeps its colours); white cards
+  removed. Report shows the dark version on screen and the original only in print (`.rp-logo-print`).
+  Fixed stray "null" text: native `Element.append(null)` writes the word "null" (unlike `ui.el`,
+  which skips nulls) — in the Merkle proof panel and the Tamper test block detail. Use `''` there.
+  Headless-Chrome tested at 1440/390 px and print; no "null", no JS/CSP errors.
 
 - 2026-10-23 — NFSU logo added: full logo above the title on the login page and at the top of
   admin/report.html (prints too); crest replaces the 🔐 mark in the topbar on every page (`UI.topbar`).

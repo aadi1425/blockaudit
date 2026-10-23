@@ -205,10 +205,12 @@ td.wrap { white-space: normal; min-width: 220px; }
 .login-brand { text-align: center; margin-bottom: 28px; }
 .login-brand h1 { font-size: 1.9rem; }
 .login-brand p { color: var(--muted); margin-top: 6px; }
-/* NFSU logo: navy on white, so it sits on a white card on the dark theme */
-.login-logo { display: block; width: min(280px, 100%); height: auto; margin: 0 auto 20px; padding: 10px 14px; background: #fff; border-radius: var(--r-sm); }
-.brand-crest { width: 26px; height: auto; padding: 2px; background: #fff; border-radius: 4px; }
-.rp-logo { display: block; width: 220px; height: auto; margin-bottom: 14px; padding: 8px 10px; background: #fff; border-radius: var(--r-sm); }
+/* NFSU logo: *-dark.png has a transparent background and light lettering for the dark theme;
+   the original (navy on white) is used only when printing the report */
+.login-logo { display: block; width: min(300px, 100%); height: auto; margin: 0 auto 20px; }
+.brand-crest { width: 24px; height: auto; }
+.rp-logo { display: block; width: 240px; height: auto; margin-bottom: 14px; }
+.rp-logo-print { display: none; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; }
 .form-error { color: var(--red); font-size: 0.88rem; min-height: 1.3em; margin-bottom: 10px; }
 .secure-note { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; font-size: 0.8rem; color: var(--faint); }
@@ -381,6 +383,8 @@ body:has(.topbar-wide) .alerts { top: calc(118px + env(safe-area-inset-top, 0px)
   html, body { background: #fff !important; color: #000 !important; }
   body { font-size: 10pt; }
   .topbar, .no-print, .alerts, .overlay { display: none !important; }
+  .rp-logo-screen { display: none; }
+  .rp-logo-print { display: block; }
   .page { max-width: none; padding: 0; }
   .page-head p, .muted, .rp-facts dt { color: #333 !important; }
   .rp-facts, .table-wrap { background: #fff; border: 1px solid #999; overflow: visible; }
