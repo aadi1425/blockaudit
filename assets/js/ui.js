@@ -147,7 +147,7 @@
     const logout = el('button', { class: 'btn btn-ghost btn-sm', type: 'button', id: 'logout', text: 'Log out' });
     const bar = el('header', { class: nav.length > 4 ? 'topbar topbar-wide' : 'topbar' }, [
       el('a', { class: 'brand', href: root + nav[0].href }, [
-        el('span', { class: 'brand-mark', 'aria-hidden': 'true', text: '🔐' }),
+        el('img', { class: 'brand-crest', src: root + 'assets/img/nfsu-crest.png', alt: 'NFSU', width: '104', height: '133' }),
         el('span', { text: 'BlockAudit' }),
       ]),
       el('nav', { class: 'nav', 'aria-label': 'Main' }, links),

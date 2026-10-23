@@ -94,6 +94,7 @@ blockaudit/
 ├── admin/report.html       admin: printable audit report (@media print in style.css)
 ├── assets/css/style.css    all styles (one file)
 ├── assets/data/seed.json   starter chain { chain, meta, terminal } loaded into an empty browser
+├── assets/img/nfsu-logo.png, nfsu-crest.png   NFSU logo (login + report) and crest (topbar), shown on a white card
 ├── assets/js/core.js       BA core: storage, SHA-256, mining, chain, validation, consensus, ACL, Merkle, log
 ├── assets/js/auth.js       login, PBKDF2, lockout, signed sessions, guard(), reveal(), timeouts
 ├── assets/js/ui.js         BA.ui helpers: el(), topbar, nav lists, modal, alerts, overlay, seal
@@ -256,6 +257,18 @@ git push
   either add a light version or word it as "discussed". Digital signatures are now implemented.
 
 ## 9. Progress log (newest at top — add a line after every change)
+
+- 2026-10-23 — NFSU logo added: full logo above the title on the login page and at the top of
+  admin/report.html (prints too); crest replaces the 🔐 mark in the topbar on every page (`UI.topbar`).
+  Logo is navy on white, so `.login-logo` / `.brand-crest` / `.rp-logo` give it a white card.
+  Source: Aadi's `Pictures\nfsu.png` (378×133). Headless-Chrome tested at 1440 and 390 px and print:
+  all images load, no JS/CSP errors.
+
+- 2026-10-23 — Added `PROGRESS_REPORT.md`: plain-language summary of everything done so far
+  (timeline, results table, limits, future work, suggested slide outline) for Aadi's PPT.
+  Not committed yet.
+- 2026-10-23 — Made a 5-slide summary deck (Claude Slides artifact) with headless-Chrome screenshots.
+  Found: Merkle proof box shows a stray "null" line under the green result (admin-merkle.js) — to fix.
 
 - 2026-10-22 — Merkle tree redrawn as an SVG diagram: lines from every node to its parent,
   Sideways (default, fits the page) / Top-down toggle, legend, record name + result on each leaf.
